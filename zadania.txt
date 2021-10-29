@@ -1,0 +1,41 @@
+lab 03
+# zadanie 1
+1. 
+CREATE TABLE postac (id_postaci int primary key auto_increment,
+nazwa varchar(40) not null,
+rodzaj enum('wiking','ptak','kobieta'), # lub set()
+data_ur date,
+wiek int(3) unsigned) # bez znaku = nieujemne ;
+2.
+INSERT INTO postac VALUES
+(default,'Bjorn','wiking',"1678-10-27",32);
+INSERT INTO postac VALUES
+(default,'Drozd','ptak',"1700-12-25",10);
+INSERT INTO postac VALUES
+(default,'Tesciowa','kobieta',"1635-06-15",75);
+3.
+UPDATE postac SET wiek=88 WHERE nazwa='Tesciowa';
+# zadanie 2
+CREATE TABLE walizka (id_walizki int auto_increment primary key,
+pojemnosc int unsigned,
+kolor set('rozowy','czerwony','teczowy','zolty'),
+id_wlasciciela int,
+foreign key (id_wlasciciela) references postac(id_postaci) on delete cascade);
+
+ALTER TABLE walizka ALTER kolor SET DEFAULT 'rozowy';
+
+INSERT INTO walizka VALUES 
+(default, 50, 'czerwony', 1);
+INSERT INTO walizka VALUES 
+(default, 30, 'rozowy', 3);
+#zadanie 3
+CREATE TABLE izba (adres_budynku VARCHAR(50) NOT NULL,
+nazwa_izby VARCHAR(40) NOT NULL,
+metraz int unsigned,
+wlasciciel int, foreign key(wlasciciel) references postac(id_postaci) on delete cascade,
+PRIMARY KEY (adres_budynku, nazwa_izby));
+
+ALTER TABLE izba ADD COLUMN kolor_izby SET('czarny','czerwony','zielony','niebieski') AFTER metraz;
+
+INSERT INTO izba VALUES 
+('kwiatowa_15', 'spizarnia', 50, 'zielony', 1);

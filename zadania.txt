@@ -39,3 +39,37 @@ ALTER TABLE izba ADD COLUMN kolor_izby SET('czarny','czerwony','zielony','niebie
 
 INSERT INTO izba VALUES 
 ('kwiatowa_15', 'spizarnia', 50, 'zielony', 1);
+
+4.
+CREATE TABLE przetwory (id_przetworu int auto_increment primary key, rok_produkcji YEAR DEFAULT(1654),
+id_wykonawcy int, foreign key(id_wykonawcy) references postac(id_postaci) on delete cascade,
+zawartosc VARCHAR(60), dodatek VARCHAR(40) DEFAULT('papryczka chilli'),
+id_konsumenta int, foreign key(id_konsumenta) references postac(id_postaci) on delete cascade);
+INSERT INTO przetwory VALUES
+(default, 1925, 1, 'Bigos', default, 3);
+
+5.
+INSERT INTO postac VALUES
+(default,'wiking1','wiking',"1678-11-27",32);
+INSERT INTO postac VALUES
+(default,'wiking2','wiking',"1678-10-15",32);
+INSERT INTO postac VALUES
+(default,'wiking3','wiking',"1678-09-14",32);
+INSERT INTO postac VALUES
+(default,'wiking4','wiking',"1678-06-15",32);
+INSERT INTO postac VALUES
+(default,'wiking5','wiking',"1678-02-12",32);
+
+CREATE TABLE statek (nazwa_statku VARCHAR(40) NOT NULL, rodzaj_statku SET('handlowy', 'bojowy'),
+data_wodowania DATE, max_ladownosc int unsigned);
+INSERT INTO statek VALUES
+('Kacper', 'handlowy', "1690-06-14", 100);
+INSERT INTO statek VALUES
+('Kamil', 'bojowy', "1688-06-14", 25);
+ALTER TABLE postac ADD COLUMN funkcja VARCHAR(40) AFTER wiek;
+UPDATE postac SET funkcja = 'kapitan' WHERE nazwa = 'Bjorn';
+ALTER TABLE postac ADD COLUMN (statek VARCHAR(40), 
+foreign key(statek) references statek(nazwa_statku) on delete cascade) AFTER funkcja; #?
+DELETE FROM izba WHERE nazwa_izby = 'spizarnia';
+DROP TABLE izba;
+

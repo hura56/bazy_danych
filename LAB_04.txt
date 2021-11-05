@@ -1,0 +1,51 @@
+Lab_04
+
+1.
+a)
+DELETE FROM postac WHERE id_postaci = 8;
+DELETE FROM postac WHERE id_postaci = 7;
+
+b)
+#[alternatywnie]
+SET foreign_key_checks = 0;
+
+ALTER TABLE przetwory DROP FOREIGN KEY przetworzy_ibfk_1;
+ALTER TABLE przetwory DROP FOREIGN KEY przetworzy_ibfk_2;
+ALTER TABLE walizka DROP FOREIGN KEY walizka_ibfk_1;
+ALTER TABLE postac MODIFY id_postaci int;
+ALTER TABLE postac DROP Primary key;
+
+2.
+ALTER TABLE postac ADD COLUMN pesel CHAR(11) NOT NULL AFTER wiek;
+UPDATE postac SET pesel='12345678900' + id_postaci;
+ALTER TABLE postac ADD Primary key (pesel);
+ALTER TABLE postac MODIFY rodzaj ENUM('wiking','ptak','kobieta','syrena');
+INSERT INTO postac VALUES 
+(7, 'Gertruda Nieszczera', 'syrena', '1655-10-25', 68, 12345678907, NULL); 
+
+3.
+select nazwa from postac where nazwa like '%a%';
+UPDATE postac SET statek='Kamil' where nazwa like '%a%';
+
+UPDATE statek set max_ladownosc=max_ladownosc * 0.7 WHERE 
+data_wodowania >= '1901-01-01' and data_wodowania <= '2000-12-31';
+ALTER TABLE postac MODIFY wiek int unsigned CONSTRAINT check_1 CHECK (wiek < 1000);
+
+4.
+ALTER TABLE postac MODIFY rodzaj ENUM('wiking','ptak','kobieta','syrena','waz');
+INSERT INTO postac VALUES
+(8, 'Loko', 'waz', '1655-12-29', 68, 12345678908, NULL, NULL);
+
+CREATE TABLE marynarz like postac;
+INSERT INTO marynarz SELECT * from postac where statek is not null;
+
+5.
+UPDATE postac set statek=NULL;
+UPDATE marynarz set statek=NULL;
+DELETE FROM postac where id_postaci = 4;
+DELETE FROM statek where nazwa_statku = 'Kacper';
+DELETE FROM statek where nazwa_statku = 'Kamil';
+DROP TABLE statek;
+
+CREATE TABLE zwierz SELECT id_postaci, nazwa, wiek from postac where rodzaj = 'waz';
+INSERT INTO zwierz SELECT id_postaci, nazwa, wiek from postac where rodzaj = 'ptak';

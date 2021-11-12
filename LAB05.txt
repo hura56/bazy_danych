@@ -1,0 +1,48 @@
+LAB 05
+Zadanie 1.
+1.
+Przypadek 1. Aktywna baza to baza imienna.)
+CREATE TABLE kreatura SELECT * FROM wikingowie.kreatura;
+
+Przypadek 2. Aktywna baza to baza wikingowie.)
+CREATE TABLE huraa.kreatura SELECT * FROM kreatura;
+2.
+SELECT * from zasob;
+3.
+SELECT * from zasob WHERE rodzaj="jedzenie";
+4.
+SELECT idZasobu, ilosc from ekwipunek WHERE idKreatury IN (1,3,5);
+
+Zadanie 2.
+1.
+SELECT * from kreatura WHERE rodzaj!= "wiedzma" and udzwig >= 50;
+2.
+SELECT * from zasob WHERE waga >= 2 and waga <=5;
+3.
+SELECT * from kreatura WHERE nazwa LIKE '%or%' and udzwig >= 30 and udzwig <=70;
+
+Zadanie 3.
+1.
+SELECT * from zasob WHERE month(dataPozyskania) = 8 or month(dataPozyskania) = 7;
+2.
+SELECT * from zasob WHERE rodzaj is not NULL order by waga;
+3.
+SELECT * from kreatura order by dataUR LIMIT 5;
+{... LIMIT 5;
+... LIMIT 5,5; # indeks START, ile elementów}
+
+Zadanie 4.
+1.
+SELECT distinct rodzaj from zasob;
+2.
+SELECT CONCAT(nazwa, ' ', rodzaj) as n from kreatura WHERE rodzaj like 'wi%';
+3.
+SELECT CONCAT(nazwa,' ',ilosc*waga) as calkowita_waga from zasob WHERE dataPozyskania > '1999-12-31' and dataPozyskania < '2008-01-01';
+
+Zadanie 5.
+1.
+SELECT CONCAT(nazwa,' ',waga*0.7,'  ',waga*0.3) as 'masa jedzenia i odpadkow' from zasob WHERE rodzaj = 'jedzenie';
+2.
+SELECT * from zasob WHERE rodzaj is NULL;
+3.
+SELECT distinct rodzaj from zasob WHERE nazwa like 'Ba%' or nazwa like '%os' order by rodzaj;

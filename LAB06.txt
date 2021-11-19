@@ -1,0 +1,74 @@
+LAB 06
+
+# avg() - średnia
+# count() - zlicza ilość elementów
+# sum() - suma wartości (liczbowych)
+# min() - minimum
+# max() - maksimum
+
+# Zadanie 1
+
+# select avg(udzwig) from kreatura;
+1. select avg(waga) from kreatura WHERE rodzaj = 'wiking';
+# select round(avg(waga)) from kreatura WHERE rodzaj = 'wiking'; - zaokrąglenie
+
+2. select rodzaj, avg(waga), count(*) from kreatura group by rodzaj;
+
+# now() lub curdate() 
+
+3. select rodzaj, round(avg(YEAR(curdate()) - YEAR(dataUr))) as 'sredni wiek' from kreatura group by rodzaj;
+
+# Zadanie 2
+
+1. select rodzaj, sum(waga*ilosc) as 'laczna waga' from zasob group by rodzaj;
+
+2. SELECT nazwa, avg(waga) as 'srednia waga' from zasob WHERE ilosc >= 4 GROUP BY nazwa HAVING avg(waga) > 10;
+
+3.SELECT rodzaj, count(distinct (nazwa)) as 'ilosc nazw' from zasob GROUP BY rodzaj HAVING sum(ilosc) > 1;
+# WHERE ilosc > 1;
+# lub HAVING sum(ilosc) > 1;
+
+# Zadanie 3
+
+#zlaczanie zewnetrzne
+1. select * from kreatura, ekwipunek where kreatura.idKreatury=ekwipunek.idKreatury;
+# lub uzywajac INNER JOIN 
+1'. select * from kreatura INNER JOIN ekwipunek ON 
+kreatura.idKreatury=ekwipunek.idKreatury;
+
+1. select k.nazwa, sum(e.ilosc) from kreatura k INNER JOIN ekwipunek e ON 
+k.idKreatury=e.idKreatury GROUP BY k.nazwa;
+
+2. select * from kreatura k INNER JOIN ekwipunek e
+ ON k.idKreatury=e.idKreatury INNER JOIN zasob z ON
+e.idZasobu=z.idZasobu;
+
+2.select k.nazwa, z.nazwa from kreatura k INNER JOIN ekwipunek e
+ ON k.idKreatury=e.idKreatury INNER JOIN zasob z ON
+e.idZasobu=z.idZasobu;
+
+3.
+ select k.idKreatury, k.nazwa, e.idKreatury, e.idZasobu from kreatura k LEFT JOIN ekwipunek e ON 
+ k.idKreatury=e.idKreatury;
+ #
+ select idKreatury from kreatura;
+ select idKreatury from ekwipunek;
+ 
+ #podzapytanie 
+3. select k.idKreatury, k.nazwa from kreatura k where idKreatury not in
+(select distinct idKreatury from ekwipunek where idKreatury is not null);
+
+# Zadanie 4
+#natural join
+SELECT * from kreatura natural join ekwipunek, zasob;
+
+1. Select k.nazwa, z.nazwa from kreatura k INNER JOIN ekwipunek e
+ ON k.idKreatury=e.idKreatury INNER JOIN zasob z ON
+e.idZasobu=z.idZasobu where k.rodzaj = 'wiking' and k.dataUr > '1669.12.31' and k.dataUr < '1680.01.01'; 
+
+2. Select k.nazwa from kreatura k INNER JOIN ekwipunek e
+ ON k.idKreatury=e.idKreatury INNER JOIN zasob z ON
+e.idZasobu=z.idZasobu where z.rodzaj = 'jedzenie' order by dataUr desc LIMIT 5;
+
+3. Select j.nazwa, j.idKreatury, k.nazwa, k.idKreatury from kreatura k 
+INNER JOIN kreatura j ON k.idKreatury=j.idKreatury+5;

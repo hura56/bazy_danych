@@ -41,13 +41,18 @@ on k.idKreatury=u.id_uczestnika;
 
 1. SELECT idWyprawy, sum(length(dziennik)) from etapy_wyprawy group by idWyprawy having sum(length(dziennik)) < 400;
 
-2. SELECT w.nazwa, sum(z.waga*e.ilosc)/count(u.id_uczestnika) from wyprawa w
+#źle 2. SELECT w.nazwa, sum(z.waga*e.ilosc)/count(u.id_uczestnika) AS 'srednia waga' from wyprawa w
 inner join uczestnicy u on w.id_wyprawy=u.id_wyprawy
-inner join kreatura k on u.id_uczestnika=k.idKreatury
-inner join ekwipunek e on k.idKreatury=e.idKreatury
+left join kreatura k on u.id_uczestnika=k.idKreatury
+left join ekwipunek e on k.idKreatury=e.idKreatury
 inner join zasob z on e.idZasobu=z.idZasobu
-group by w.nazwa;
+group by w.nazwa;     
 
+2.SELECT u.id_wyprawy, sum(z.waga*e.ilosc)/count(distinct u.id_uczestnika) AS 'srednia waga'
+from uczestnicy u 
+left join ekwipunek e on u.id_uczestnika=e.idKreatury
+left join zasob z on z.idZasobu=e.idZasobu
+group by u.id_wyprawy;
 
 
 # Zadanie 5

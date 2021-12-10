@@ -1,0 +1,43 @@
+1.
+SELECT nazwisko FROM pracownik order by nazwisko asc;
+
+2.
+SELECT imie, nazwisko, pensja from pracownik WHERE YEAR(data_urodzenia)
+>1979;
+
+3.
+SELECT * FROM pracownik WHERE pensja >=3500 and pensja <=5000;
+
+4.
+SELECT * from stan_magazynowy WHERE ilosc > 10;
+
+5.
+SELECT * from towar WHERE nazwa_towaru like 'A%' or nazwa_towaru 
+like 'B%' or nazwa_towaru like 'C%';
+
+6.
+SELECT * from klient WHERE czy_firma = 0;
+
+7.
+SELECT * from zamowienie ORDER BY data_zamowienia desc LIMIT 10;
+
+8.
+SELECT * from pracownik ORDER BY pensja asc LIMIT 5;
+
+9.
+SELECT * from towar WHERE nazwa_towaru like '!%a%' 
+ORDER BY cena_zakupu desc LIMIT 10;
+
+10.
+SELECT * from towar t INNER JOIN stan_magazynowy s ON
+t.id_towaru=s.towar WHERE s.jm = 3 ORDER BY t.nazwa_towaru asc, t.cena_zakupu desc;
+
+11.
+CREATE TABLE huraa.towary_powyzej_100 SELECT * FROM towar WHERE 
+cena_zakupu > 100;
+
+12.
+CREATE TABLE huraa.pracownik_50_plus LIKE pracownik;
+
+INSERT INTO huraa.pracownik_50_plus SELECT * FROM pracownik WHERE
+YEAR(curdate())-YEAR(data_urodzenia) >=50;

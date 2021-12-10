@@ -1,0 +1,36 @@
+1.
+SELECT p.imie, p.nazwisko, d.nazwa FROM pracownik p
+INNER JOIN dzial d ON p.dzial=d.id_dzialu
+GROUP BY id_pracownika;
+
+2.
+SELECT t.nazwa_towaru, k.nazwa_kategori, s.ilosc FROM
+towar t INNER JOIN kategoria k ON t.kategoria=k.id_kategori
+INNER JOIN stan_magazynowy s ON t.id_towaru=s.towar
+GROUP BY id_towaru ORDER BY s.ilosc desc;
+
+3.
+SELECT * from zamowienie WHERE status_zamowienia = 6;
+
+4.
+SELECT * FROM klient k INNER JOIN adres_klienta a
+ON k.id_klienta=a.klient WHERE a.typ_adresu=1 and 
+a.miejscowosc="Olsztyn";
+
+5.
+SELECT * from jednostka_miary WHERE id_jednostki = 1 or
+id_jednostki=2 or id_jednostki=5;
+
+6.
+
+
+
+
+
+
+
+
+
+
+10.
+WHERE kod not like '__-___';

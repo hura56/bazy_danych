@@ -1,0 +1,38 @@
+Z.1
+SELECT d.nazwa, min(p.pensja), max(p.pensja), avg(p.pensja) from dzial d
+INNER JOIN pracownik p ON d.id_dzialu=p.dzial group by id_dzialu;
+
+Z.2 
+SELECT k.pelna_nazwa, pz.ilosc*pz.cena AS wartosc_zamowienia from klient k 
+INNER JOIN zamowienie z ON k.id_klienta=z.klient 
+INNER JOIN pozycja_zamowienia pz ON z.id_zamowienia=pz.zamowienie
+ORDER BY wartosc_zamowienia desc LIMIT 10;
+
+Z.3
+ SELECT YEAR(z.data_zamowienia) AS Rok, sum(pz.ilosc*pz.cena) AS Przychod
+ from zamowienie z INNER JOIN pozycja_zamowienia pz ON z.id_zamowienia=pz.zamowienie
+ WHERE z.status_zamowienia!=6 GROUP BY Rok ORDER BY Przychod desc;
+ 
+ Z.4
+ SELECT sum(pz.ilosc*pz.cena) AS wartosc_anulowanych_zamowien from zamowienie z
+ INNER JOIN pozycja_zamowienia pz ON z.id_zamowienia=pz.zamowienie WHERE 
+ z.status_zamowienia=6;
+ 
+ Z.5
+ SELECT ak.miejscowosc, count(z.id_zamowienia) AS liczba_zamowien, sum(pz.ilosc*pz.cena)
+ AS suma_zamowien from pozycja_zamowienia pz INNER JOIN zamowienie z ON
+ pz.zamowienie=z.id_zamowienia INNER JOIN klient k ON z.klient=k.id_klienta
+ INNER JOIN adres_klienta ak ON k.id_klienta=ak.klient WHERE ak.typ_adresu=1
+ GROUP BY ak.miejscowosc;
+ 
+ Z.6
+ Wyświetl dotychczasowy dochód firmy biorąc pod uwagę tylko zamówienia zrealizowane.
+ 
+ SELECT pz.ilosc*pz_cena AS przychod, t.cena_zakupu*sm.ilosc AS KUP, przychod-KUP
+ AS Dochod FROM zamowienie z INNER JOIN pozycja_zamowienia pz ON 
+ z.id_zamowienia=pz.zamowienie INNER JOIN towar t pz.towar=t.id_towaru
+ INNER JOIN stan_magazynowy sm ON t.id_towaru=sm.towar WHERE z.status_zamowienia=5;
+ 
+
+ 
+ 

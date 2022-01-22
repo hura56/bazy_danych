@@ -33,6 +33,11 @@ Z.3
  z.id_zamowienia=pz.zamowienie INNER JOIN towar t pz.towar=t.id_towaru
  INNER JOIN stan_magazynowy sm ON t.id_towaru=sm.towar WHERE z.status_zamowienia=5;
  
+ Z.7
+
+SELECT sum(pz.cena) as dochod from zamowienie z
+INNER JOIN pozycja_zamowienia pz ON z.numer_zamowienia = pz.zamowienie
+GROUP BY YEAR(z.data_zamowienia) ORDER BY dochod DESC;
 
  
  
